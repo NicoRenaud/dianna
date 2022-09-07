@@ -3,7 +3,7 @@ import onnxruntime as ort
 
 class SimpleModelRunner:
     """Runs an onnx model with a set of inputs and outputs."""
-    def __init__(self, filename, preprocess_function=None):
+    def __init__(self, filename, preprocess_function=None, multiple_inputs = False):
         """
         Generates function to run ONNX model with one set of inputs and outputs.
 
@@ -20,6 +20,7 @@ class SimpleModelRunner:
         """
         self.filename = filename
         self.preprocess_function = preprocess_function
+        self.multiple_inputs = multiple_inputs
 
     def __call__(self, input_data):
         # get ONNX predictions
@@ -30,6 +31,14 @@ class SimpleModelRunner:
         if self.preprocess_function is not None:
             input_data = self.preprocess_function(input_data)
 
-        onnx_input = {input_name: input_data}
+        if self.multiple_inputs:
+            
+            onnx_input = {}
+            onnx_input['input_3'] = input_data[1].astype('float32')
+            onnx_input['input_4'] = input_data[0].astype('float32')        
+
+        else:
+            onnx_input = {input_name: input_data}
+
         pred_onnx = sess.run([output_name], onnx_input)[0]
         return pred_onnx
