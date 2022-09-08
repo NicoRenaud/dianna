@@ -1,7 +1,7 @@
 import inspect
 
 
-def get_function(model_or_function, preprocess_function=None):
+def get_function(model_or_function, preprocess_function=None, multiple_inputs=False):
     """Converts input to callable function.
 
     Any keyword arguments are given to the ModelRunner class if the input is a model path.
@@ -13,7 +13,7 @@ def get_function(model_or_function, preprocess_function=None):
     """
     from dianna.utils.onnx_runner import SimpleModelRunner  # pylint: disable=import-outside-toplevel
     if isinstance(model_or_function, str):
-        runner = SimpleModelRunner(model_or_function, preprocess_function=preprocess_function)
+        runner = SimpleModelRunner(model_or_function, preprocess_function=preprocess_function, multiple_inputs=multiple_inputs)
     elif callable(model_or_function):
         if preprocess_function is None:
             runner = model_or_function

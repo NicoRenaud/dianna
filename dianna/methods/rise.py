@@ -19,7 +19,7 @@ class RISE:
     required_labels = ('channels', )
 
     def __init__(self, n_masks=1000, feature_res=8, p_keep=None,  # pylint: disable=too-many-arguments
-                 axis_labels=None, preprocess_function=None, mask_string="UNKWORDZ"):
+                 axis_labels=None, preprocess_function=None, multiple_inputs = False, mask_string="UNKWORDZ"):
         """RISE initializer.
 
         Args:
@@ -36,10 +36,12 @@ class RISE:
         self.feature_res = feature_res
         self.p_keep = p_keep
         self.preprocess_function = preprocess_function
+        self.multiple_inputs = multiple_inputs
         self.masks = None
         self.predictions = None
         self.axis_labels = axis_labels if axis_labels is not None else []
         self.mask_string = mask_string
+        print('my RISE')
 
     def explain_text(self, model_or_function, input_text, labels=(0,), batch_size=100):
         """Runs the RISE explainer on text.
@@ -142,7 +144,8 @@ class RISE:
         # add batch axis as first axis
         input_data = input_data.expand_dims('batch', 0)
         input_data, full_preprocess_function = self._prepare_image_data(input_data)
-        runner = utils.get_function(model_or_function, preprocess_function=full_preprocess_function)
+        runner = utils.get_function(model_or_function, preprocess_function=full_preprocess_function, multiple_inputs = self.multiple_inputs)
+        print(runner)
 
         active_p_keep = self._determine_p_keep_for_images(input_data, runner) if self.p_keep is None else self.p_keep
 
