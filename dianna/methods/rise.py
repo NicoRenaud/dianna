@@ -41,7 +41,7 @@ class RISE:
         self.predictions = None
         self.axis_labels = axis_labels if axis_labels is not None else []
         self.mask_string = mask_string
-        print('my RISE')
+        print('!! Modified RISE for multiple input use case !!')
 
     def explain_text(self, model_or_function, input_text, labels=(0,), batch_size=100):
         """Runs the RISE explainer on text.
