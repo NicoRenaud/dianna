@@ -33,8 +33,10 @@ class SimpleModelRunner:
         if self.multiple_inputs:
             
             onnx_input = {}
-            onnx_input['input_3'] = input_data[1].astype('float32')
-            onnx_input['input_4'] = input_data[0].astype('float32')
+            input_names = [input.name for input in sess.get_inputs()]
+            input_data.reverse()
+            for idx, input_name in enumerate(input_names):
+                onnx_input[input_name] = input_data[idx].astype('float32')
 
         else:
             
