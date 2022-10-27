@@ -175,8 +175,8 @@ def global_store_i(method_sel, model_path, image_test):
 @app.callback(
     dash.dependencies.Output('signal_image', 'data'),
     [dash.dependencies.Input('method_sel_img', 'value'),
-     dash.dependencies.State("upload-model-img", "filename"),
-     dash.dependencies.State("upload-image", "filename"),
+     dash.dependencies.Input("upload-model-img", "filename"),
+     dash.dependencies.Input("upload-image", "filename"),
      ])
 def compute_value_i(method_sel, fn_m, fn_i):
     """Takes in the selected XAI method, the model and the image filenames, returns the selected XAI method."""
@@ -202,23 +202,21 @@ def compute_value_i(method_sel, fn_m, fn_i):
 @app.callback(
     dash.dependencies.Output('output-state-img', 'children'),
     dash.dependencies.Output('graph_img', 'figure'),
-    dash.dependencies.State("upload-model-img", "filename"),
-    dash.dependencies.State("upload-image", "filename"),
-    dash.dependencies.Input("signal_image", "data"),
     dash.dependencies.Input("upload-model-img", "filename"),
     dash.dependencies.Input("upload-image", "filename"),
+    dash.dependencies.Input("signal_image", "data"),
 )
 # pylint: disable=too-many-locals
 # pylint: disable=unused-argument
-def update_multi_options_i(fn_m, fn_i, sel_methods, new_model, new_image):
+def update_multi_options_i(fn_m, fn_i, sel_methods):
     """Takes in the last model and image uploaded filenames, the selected XAI method, and returns the selected XAI method."""
-    ctx = dash.callback_context
+    # ctx = dash.callback_context
 
-    if (ctx.triggered[0]["prop_id"] == "upload-model-img.filename") or (ctx.triggered[0]["prop_id"] == "upload-image.filename") or (not ctx.triggered):
-        cache.clear()
-        return html.Div(['']), utilities.blank_fig()
-    if (not sel_methods):
-        return html.Div(['']), utilities.blank_fig()
+    # if (ctx.triggered[0]["prop_id"] == "upload-model-img.filename") or (ctx.triggered[0]["prop_id"] == "upload-image.filename") or (not ctx.triggered):
+    #     cache.clear()
+    #     return html.Div(['']), utilities.blank_fig()
+    # if (not sel_methods):
+    #     return html.Div(['']), utilities.blank_fig()
 
     # update graph
     # pylint: disable=too-many-nested-blocks
