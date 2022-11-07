@@ -308,7 +308,7 @@ def update_multi_options_i(fn_m, fn_i, sel_methods):
             print(e)
             return html.Div(['There was an error running the model. Check either the test image or the model.']), utilities.blank_fig()
     else:
-        return html.Div(['Missing either model or image.']), utilities.blank_fig()
+        return html.Div([' ']), utilities.blank_fig()
 
 ###################################################################
 
@@ -522,6 +522,6 @@ def update_multi_options_t(fn_m, input_text, sel_methods, new_model, new_text):
                 'There was an error running the model. Check either the test text or the model.'
                 ]), utilities.blank_fig(), utilities.blank_fig()
     else:
-        return html.Div(['Missing either model or input text.']), utilities.blank_fig(), utilities.blank_fig()
+        return html.Div([' ']), utilities.blank_fig(), utilities.blank_fig()
 
 ###################################################################
